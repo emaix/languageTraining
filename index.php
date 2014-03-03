@@ -12,7 +12,7 @@ $itemsPerInterval = 6;
 if(isset($_GET["interval"])) $interval = $_GET["interval"];
 if(isset($_GET["items_per_interval"])) $itemsPerInterval = $_GET["items_per_interval"];
 
-$groups = dbQuery("SELECT * FROM groups");
+$groups = dbQuery("SELECT * FROM groups ORDER BY created_at DESC");
 
 $vocabulary = null;
 $currentGroup = null;
