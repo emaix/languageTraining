@@ -1,8 +1,11 @@
+<h2>Interval</h2>
+
 <h4>
-    <a href="#" onclick="$('#intervalSettings').toggle('fast');">Items / Interval: </a>
-    <span class="label label-success">
+    <span class="label label-warning">
         <?php echo $itemsPerInterval; ?> words per <?php echo $interval; ?> Mins
     </span>
+    &nbsp;
+    <a href="#" onclick="$('#intervalSettings').toggle('fast');" style="font-size: 14px;">Change </a>
 </h4>
 
 <div id="intervalSettings" style="display: none;">

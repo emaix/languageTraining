@@ -31,19 +31,24 @@ if(isset($_GET["groupId"]))
 
 ?>
 
+<h2>Directions</h2>
+<p>Set your interval below and select a group / latest vocabulary. Take the loaded URL and add it as your browsers start-up page, or bookmark the page.</p>
+
 <?php include("intervalSettings.php"); ?>
 
-<br />
 
-<a href="#" onclick="$('#thatGrammerThing').toggle();return false;" class="btn btn-success" style="float:right;">What was that grammer thing?</a>
+<h2>Info</h2>
 
-<a href="groups.php" class="btn btn-primary" style="float:right;margin-right: 5px;">Manage Groups</a>
+<a href="#" onclick="$('#thatGrammerThing').toggle();return false;" class="btn btn-success" style="">What was that grammer thing?</a>
 
 <?php include("grammerThing.php"); ?>
 
-<h2>Groups</h2>
+<h2>
+    Groups
+    <a href="groups.php" class="btn btn-primary" style="float:right;">Manage Groups</a>
+</h2>
 
-<br />
+<p>Groups are "word containers". Click Manage Groups to create new Groups and to add vocabulary to them.</p>
 <p>Select a group that you would like to practice.</p>
 <p>
     Or you can practice the 

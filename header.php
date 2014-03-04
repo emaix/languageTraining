@@ -88,15 +88,15 @@
         <br />
         <div id="" class="body-wrapper well">
             <div id="searchResults" style="display:none;">
-                <h3>
+                <h2>
                     Search Results
                     <a href="#" onclick="$('#searchResults').hide('fast');" class="btn btn-warning pull-right">
                         Close Search Results
                     </a>
-                </h3>
+                </h2>
                 
                 
-                <table class="table table-striped">
+                <table class="table table-striped table-condensed">
                     <thead>
                         <tr>
                             <th>Cz</th>
