@@ -8,5 +8,6 @@ $vocabularyType["verb_et_et_it"] = "Verb -ET/-ĚT/-IT";
 $vocabularyType["verb_irregular"] = "Verb Irregular";
 $vocabularyType["verb_noun"] = "Noun";
 $vocabularyType["verb_adjective"] = "Adjective";
+$vocabularyType["unknown"] = "No idea!";
 
 ?>

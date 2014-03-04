@@ -25,7 +25,9 @@
             body
             {
                 background-image: url("/images/cz.jpg");
-                background-size:100% auto;
+                background-size:100% 100%;
+                background-repeat: no-repeat;
+                background-attachment: fixed;
             }
             
             .body-wrapper

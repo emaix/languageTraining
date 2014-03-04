@@ -46,6 +46,7 @@ $vocabulary = dbQuery("SELECT * FROM vocabulary WHERE group_id = '".$_GET["group
                         <option value="verb_irregular" />Verb Irregular</option>
                         <option value="verb_noun" />Noun</option>
                         <option value="verb_adjective" />Adjective</option>
+                        <option value="unknown" />No idea!</option>
                     </select>
                 </td>
             </tr>
