@@ -43,6 +43,7 @@ if(isset($_GET["groupId"]))
         <tr>
             <th>Name</th>
             <th>Comments</th>
+            <th>Date</th>
         </tr>
     </thead>
     <tbody>
@@ -55,6 +56,7 @@ if(isset($_GET["groupId"]))
                     <a href="index.php?groupId=<?php echo urlencode($group["id"]); ?>&interval=<?php echo $interval ?>&items_per_interval=<?php echo $itemsPerInterval ?>"><?php echo $group["name"]; ?></a><br />
                 </td>            
                 <td><?php echo $group['comments']; ?></td>
+                <td><?php echo date("d-M-Y", strtotime($group['created_at'])); ?></td>
             </tr>
         <?php } ?>
     </tbody>

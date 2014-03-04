@@ -28,7 +28,7 @@ $groups = dbQuery("SELECT * FROM groups ORDER BY created_at DESC");
         <table width="90%">
             <tr>
                 <td>Name</td>
-                <td><input type="text" name="groupName" style="width: 100%;" value="<?php echo date("d-M-Y") ?>" /></td>
+                <td><input type="text" name="groupName" style="width: 100%;" value="" /></td>
             </tr>
             <tr>
                 <td>Comments</td>
@@ -51,6 +51,7 @@ $groups = dbQuery("SELECT * FROM groups ORDER BY created_at DESC");
         <tr>
             <th>Name</th>
             <th>Comments</th>
+            <th>Date</th>
         </tr>
     </thead>
     <tbody>
@@ -62,6 +63,7 @@ $groups = dbQuery("SELECT * FROM groups ORDER BY created_at DESC");
             <td>
                 <?php echo $group['comments']; ?>
             </td>
+            <td><?php echo date("d-M-Y", strtotime($group['created_at'])); ?></td>
         </tr>
         <?php } ?>
     </tbody>
