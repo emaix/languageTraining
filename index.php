@@ -19,7 +19,14 @@ $currentGroup = null;
 
 if(isset($_GET["groupId"]))
 {
-    $vocabulary = dbQuery("SELECT * FROM vocabulary WHERE group_id = '".$_GET["groupId"]."' ORDER BY created_at DESC");
+    if($_GET["groupId"] == "newest")
+    {
+        $vocabulary = dbQuery("SELECT * FROM vocabulary ORDER BY created_at DESC LIMIT ".($itemsPerInterval*4)."");
+    }
+    else
+    {
+        $vocabulary = dbQuery("SELECT * FROM vocabulary WHERE group_id = '".$_GET["groupId"]."' ORDER BY created_at DESC");
+    }
 }
 
 ?>
@@ -36,7 +43,15 @@ if(isset($_GET["groupId"]))
 
 <h2>Groups</h2>
 
-<br /><br />
+<br />
+<p>Select a group that you would like to practice.</p>
+<p>
+    Or you can practice the 
+    <a class="btn btn-default" href="index.php?groupId=newest&interval=<?php echo $interval ?>&items_per_interval=<?php echo $itemsPerInterval ?>">
+        Latest added vocabulary
+    </a>
+</p>
+<br />
 
 <table class="table table-striped">
     <thead>

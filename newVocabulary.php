@@ -7,16 +7,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     $vocabularyGroupId = mysql_escape_string($_POST["vocabularyGroupId"]);
     $vocabularyCz = mysql_escape_string($_POST["vocabularyCz"]);
     $vocabularyEn = mysql_escape_string($_POST["vocabularyEn"]);
-    $vocabularyType = mysql_escape_string($_POST["vocabularyType"]);
+    $vocabularyTyp = mysql_escape_string($_POST["vocabularyType"]);
     $vocabularyComments = mysql_escape_string($_POST["vocabularyComments"]);
     
     dbExecute("INSERT INTO vocabulary (group_id, en, cz, type, comments) 
-            VALUES ('$vocabularyGroupId', '$vocabularyEn', '$vocabularyCz', '$vocabularyType', '$vocabularyComments')");
+            VALUES ('$vocabularyGroupId', '$vocabularyEn', '$vocabularyCz', '$vocabularyTyp', '$vocabularyComments')");
 }
 
 $vocabulary = dbQuery("SELECT * FROM vocabulary WHERE group_id = '".$_GET["groupId"]."' ORDER BY created_at DESC");
 
 ?>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#vocabularyCz").focus();
+    });
+</script>
 
 <a href="groups.php" class="btn btn-default pull-right">Go back</a>
 
@@ -30,7 +36,7 @@ $vocabulary = dbQuery("SELECT * FROM vocabulary WHERE group_id = '".$_GET["group
         <table width="90%">
             <tr>
                 <td>Czech</td>
-                <td><input type="text" name="vocabularyCz" style="width: 100%;" value="" /></td>
+                <td><input type="text" name="vocabularyCz" id="vocabularyCz" style="width: 100%;" value="" /></td>
             </tr>
             <tr>
                 <td>English</td>
