@@ -96,7 +96,7 @@ if(isset($_GET["groupId"]))
     
 </script>
 
-<table class="table table-striped">
+<table class="table table-striped" id="wordsList">
     <thead>
         <tr>
             <th>Cz</th>
@@ -142,6 +142,7 @@ if(isset($_GET["groupId"]))
     
     function practice()
     {
+        $("#wordsList").hide();
         alert("It's Czech Time!!!");
         ctAlert(<?php echo $itemsPerInterval ?>);
     }
@@ -176,13 +177,13 @@ if(isset($_GET["groupId"]))
             <a href="#" onclick="$('#ctAlertHelp').show('fast');return false;" class="btn btn-danger btn-sm">I don't get it!</a>
             <div id="ctAlertHelp" style="display:none;">
                 <h3><i>English:</i> <span id="ctAlertEn"></span></h3>
-                <div id="ctAlertType" style="font-weight: bold;"></div>
+                <div style="font-weight: bold;">Type: <span id="ctAlertType"></span></div>
                 <br />
                 <div id="ctAlertComments"></div>
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-primary" id="ctAlertClose" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="ctAlertClose" data-dismiss="modal" onclick="$('#wordsList').show();">Close</button>
             <button type="button" class="btn btn-primary" id="ctAlertNextWord">Next Please</button>
         </div>
         </div><!-- /.modal-content -->
