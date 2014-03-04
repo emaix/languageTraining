@@ -73,6 +73,7 @@ $vocabulary = dbQuery("SELECT * FROM vocabulary WHERE group_id = '".$_GET["group
             <th>En</th>
             <th>Type</th>
             <th>Comments</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -82,6 +83,7 @@ $vocabulary = dbQuery("SELECT * FROM vocabulary WHERE group_id = '".$_GET["group
             <td><?php echo $word['en']; ?></td>
             <td><?php echo $vocabularyType[$word['type']]; ?></td>
             <td><?php echo $word['comments']; ?></td>
+            <td align="right"><a href="updateVocabulary.php?vocabularyId=<?php echo $word["id"]; ?>" class="btn btn-default btn-sm">Update</a></td>
         </tr>
         <?php } ?>
     </tbody>

@@ -60,7 +60,7 @@
             
             .body-wrapper
             {
-                width: 60% ;
+                width: 80% ;
                 margin-left: auto ;
                 margin-right: auto ;
             }
@@ -103,6 +103,7 @@
                             <th>En</th>
                             <th>Type</th>
                             <th>Comments</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -112,6 +113,7 @@
                                 <td><?php echo $word['en']; ?></td>
                                 <td><?php echo $vocabularyType[$word['type']]; ?></td>
                                 <td><?php echo $word['comments']; ?></td>
+                                <td align="right"><a href="updateVocabulary.php?vocabularyId=<?php echo $word["id"]; ?>" class="btn btn-default btn-sm">Update</a></td>
                             </tr>
                         <?php } ?>
                     </tbody>
