@@ -28,9 +28,13 @@ if(isset($_GET["groupId"]))
 
 <br />
 
-<h2>Groups</h2>
+<a href="#" onclick="$('#thatGrammerThing').toggle();return false;" class="btn btn-success" style="float:right;">What was that grammer thing?</a>
 
-<a href="groups.php" class="btn btn-primary" style="float:right;">Manage Groups</a>
+<a href="groups.php" class="btn btn-primary" style="float:right;margin-right: 5px;">Manage Groups</a>
+
+<?php include("grammerThing.php"); ?>
+
+<h2>Groups</h2>
 
 <br /><br />
 
@@ -87,7 +91,7 @@ if(isset($_GET["groupId"]))
     <tbody>
         <?php $wordCount = 0; ?>
         <?php while($word = mysql_fetch_array($vocabulary)) { ?>
-            <script type="text/javascript">vocabulary["<?php echo $word['id'] ?>"] = new Array("<?php echo $word['en'] ?>", "<?php echo $word['cz'] ?>", "<?php echo $word['comments'] ?>");</script>
+            <script type="text/javascript">vocabulary["<?php echo $word['id'] ?>"] = new Array("<?php echo $word['en'] ?>", "<?php echo $word['cz'] ?>", "<?php echo $word['comments'] ?>", "<?php echo $vocabularyType[$word['type']]; ?>");</script>
             <tr>           
                 <td><?php echo $word['cz']; ?></td>
                 <td><?php echo $word['en']; ?></td>
@@ -155,6 +159,8 @@ if(isset($_GET["groupId"]))
             <a href="#" onclick="$('#ctAlertHelp').show('fast');return false;" class="btn btn-danger btn-sm">I don't get it!</a>
             <div id="ctAlertHelp" style="display:none;">
                 <h3><i>English:</i> <span id="ctAlertEn"></span></h3>
+                <div id="ctAlertType" style="font-weight: bold;"></div>
+                <br />
                 <div id="ctAlertComments"></div>
             </div>
         </div>
@@ -187,6 +193,7 @@ function displayNextWord(countDown)
     
     $("#ctAlertEn").html(word[0]);
     $("#ctAlertCz").html(word[1]);
+    $("#ctAlertType").html(word[3]);
     $("#ctAlertComments").html(word[2]);
     
     if(countDown > 0)

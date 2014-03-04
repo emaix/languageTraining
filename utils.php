@@ -10,4 +10,6 @@ $vocabularyType["verb_noun"] = "Noun";
 $vocabularyType["verb_adjective"] = "Adjective";
 $vocabularyType["unknown"] = "No idea!";
 
+$searchResult = dbQuery("SELECT * FROM vocabulary ORDER BY cz DESC");
+
 ?>
