@@ -21,7 +21,7 @@ if(isset($_GET["groupId"]))
 {
     if($_GET["groupId"] == "newest")
     {
-        $vocabulary = dbQuery("SELECT * FROM vocabulary ORDER BY created_at DESC LIMIT ".($itemsPerInterval*4)."");
+        $vocabulary = dbQuery("SELECT * FROM vocabulary ORDER BY created_at DESC LIMIT ".($itemsPerInterval*5)."");
     }
     else
     {
