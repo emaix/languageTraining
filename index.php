@@ -31,6 +31,8 @@ if(isset($_GET["groupId"]))
 
 ?>
 
+<div style="float:right;"><i>Next Practice in: <b><span id="countDownNextPractice"><?php echo $interval; ?></span> Mins</b></i></div>
+
 <h2>Directions</h2>
 <p>Set your interval below and select a group / latest vocabulary. Take the loaded URL and add it as your browsers start-up page, or bookmark the page.</p>
 
@@ -145,8 +147,17 @@ if(isset($_GET["groupId"]))
         practice();
     }, <?php echo $interval*60 ?>000);
     
+    var countDownNextPractice = <?php echo $interval; ?>;
+    
+    setInterval(function(){
+        countDownNextPractice--;
+        $("#countDownNextPractice").html(countDownNextPractice);
+    }, 60000);
+    
     function practice()
     {
+        countDownNextPractice = <?php echo $interval; ?>;
+        
         $("#wordsList").hide();
         alert("It's Czech Time!!!");
         ctAlert(<?php echo $itemsPerInterval ?>);
@@ -175,6 +186,7 @@ if(isset($_GET["groupId"]))
         <div class="modal-content">
         <div class="modal-header">
             
+            <span style="float:right;" id="lbAlertModalCountDown"></span>
             <h4 class="modal-title" id="lbAlertModalTitle">Practice Time</h4>
         </div>
         <div class="modal-body">
@@ -213,6 +225,8 @@ function displayNextWord(countDown)
     var word = getRandomWord();
     
     $("#ctAlertHelp").hide();
+    
+    $("#lbAlertModalCountDown").html("<b>"+(countDown+1)+"</b>");
     
     $("#ctAlertEn").html(word[0]);
     $("#ctAlertCz").html(word[1]);
