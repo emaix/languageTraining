@@ -25,7 +25,7 @@ if(isset($_GET["groupId"]))
     }
     else
     {
-        $vocabulary = dbQuery("SELECT * FROM vocabulary WHERE group_id = '".$_GET["groupId"]."' ORDER BY created_at DESC");
+        $vocabulary = dbQuery("SELECT * FROM vocabulary WHERE group_id = '".$_GET["groupId"]."' ORDER BY cz ASC");
     }
 }
 
