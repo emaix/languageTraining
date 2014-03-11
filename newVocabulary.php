@@ -46,13 +46,9 @@ $vocabulary = dbQuery("SELECT * FROM vocabulary WHERE group_id = '".$_GET["group
                 <td>Type</td>
                 <td>
                     <select name="vocabularyType" style="width:100%;">
-                        <option value="verb_ovat" />Verb -OVAT</option>
-                        <option value="verb_at" />Verb -AT</option>
-                        <option value="verb_et_et_it" />Verb -ET/-ĚT/-IT</option>
-                        <option value="verb_irregular" />Verb Irregular</option>
-                        <option value="verb_noun" />Noun</option>
-                        <option value="verb_adjective" />Adjective</option>
-                        <option value="unknown" />Don't really know!</option>
+                        <?php foreach($vocabularyType as $vocabKey => $vocabName): ?>
+                        <option value="<?php echo $vocabKey; ?>" /><?php echo $vocabName; ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </td>
             </tr>
