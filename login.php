@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     $user = dbQuery("SELECT * FROM `user` WHERE email = '".$email."'");
     $user = mysql_fetch_array($user);
     
-    if($user && ($user["password"] == md5($password) || $user["password"] == ""))
+    if($user["password"] == md5($password))
     {
         setIsAuthenticated(true);
         
