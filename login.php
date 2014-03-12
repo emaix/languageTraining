@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             </tr>
             <tr>
                 <td>Password</td>
-                <td><input typt="password" name="password" /></td>
+                <td><input type="password" name="password" /></td>
             </tr>
             <tr><td><br /></td></tr>
             <tr>

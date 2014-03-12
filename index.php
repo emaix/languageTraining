@@ -123,11 +123,11 @@ else
                 <td><?php echo $word['cz']; ?></td>
                 <td><?php echo $word['en']; ?></td>
                 <td><?php echo $vocabularyType[$word['type']]; ?></td>
-                <td><?php echo $vocabularyVerification[$word['verification']]; ?></td>
+                <td nowrap><?php echo $vocabularyVerification[$word['verification']]; ?></td>
                 <td><?php echo $word['comments']; ?></td>
                 <td><?php echo $userFirstNames[$word["added_by"]]; ?></td>
             <td><?php echo $userFirstNames[$word["updated_by"]]; ?></td>
-            <td><?php echo $word["created_at"]; ?> / <?php echo $word["updated_at"]; ?></td>
+            <td><?php echo date("d-m-Y H:i", strtotime($word["created_at"])); ?> / <?php echo date("d-m-Y H:i", strtotime($word["updated_at"])); ?></td>
                 <td align="right"><a href="updateVocabulary.php?vocabularyId=<?php echo $word["id"]; ?>" class="btn btn-default btn-sm">Update</a></td>
             </tr>
             <?php $wordCount++; ?>
