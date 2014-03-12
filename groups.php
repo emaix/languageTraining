@@ -8,10 +8,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     $groupComments = mysql_escape_string($_POST["groupComments"]);
     
     if($groupName != "")
-        dbExecute("INSERT INTO groups (name, comments) VALUES ('$groupName', '$groupComments')");
+        dbExecute("INSERT INTO `group` (name, comments) VALUES ('$groupName', '$groupComments')");
 }
 
-$groups = dbQuery("SELECT * FROM groups ORDER BY created_at DESC");
+$groups = dbQuery("SELECT * FROM `group` ORDER BY created_at DESC");
 
 ?>
 

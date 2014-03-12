@@ -1,5 +1,20 @@
-<?php include("dbOpen.php"); ?>
-<?php include("utils.php"); ?>
+<?php 
+if(session_id() == '') {
+    session_start();
+}
+?>
+<?php include_once("dbOpen.php"); ?>
+<?php include_once("utils.php"); ?>
+
+<?php 
+
+if($_SERVER["SCRIPT_NAME"] != "/login.php" && !isAuthenticated())
+{
+    //Do a redirect to login
+    header("Location: login.php"); /* Redirect browser */
+}
+
+?>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
     
@@ -78,8 +93,20 @@
                             <a href="index.php" style="text-decoration: none;"><span class="label label-danger">Czech Time</span></a>
                         </h1>
                     </td>
+                    <td align="center">
+                        <?php if(isAuthenticated()): ?>
+                        <h2><span class="label label-info">
+                                Check it out, 
+                                <a href="settings.php"><?php echo ucfirst($_SESSION["user_firstname"]); ?></a>
+                                is back!
+                            </span>
+                        </h2>
+                        <?php endif; ?>
+                    </td>
                     <td align="right">
+                        <?php if(isAuthenticated()): ?>
                         <h2><input type="text" placeholder="Search..." id="search-filter" onfocus="$('#searchResults').show('fast');" /></h2>
+                        <?php endif; ?>
                     </td>
                 </tr>
             </table>
@@ -87,38 +114,39 @@
             
         <br />
         <div id="" class="body-wrapper well">
-            <div id="searchResults" style="display:none;">
-                <h2>
-                    Search Results
-                    <a href="#" onclick="$('#searchResults').hide('fast');" class="btn btn-warning pull-right">
-                        Close Search Results
-                    </a>
-                </h2>
-                
-                
-                <table class="table table-striped table-condensed">
-                    <thead>
-                        <tr>
-                            <th>Cz</th>
-                            <th>En</th>
-                            <th>Type</th>
-                            <th>Comments</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php while($word = mysql_fetch_array($searchResult)) { ?>
-                            <tr class="search-results">           
-                                <td><?php echo $word['cz']; ?></td>
-                                <td><?php echo $word['en']; ?></td>
-                                <td><?php echo $vocabularyType[$word['type']]; ?></td>
-                                <td><?php echo $word['comments']; ?></td>
-                                <td align="right"><a href="updateVocabulary.php?vocabularyId=<?php echo $word["id"]; ?>" class="btn btn-default btn-sm">Update</a></td>
-                            </tr>
-                        <?php } ?>
-                    </tbody>
+            <?php if(isAuthenticated()): ?>
+                <div id="searchResults" style="display:none;">
+                    <h2>
+                        Search Results
+                        <a href="#" onclick="$('#searchResults').hide('fast');" class="btn btn-warning pull-right">
+                            Close Search Results
+                        </a>
+                    </h2>
 
-                </table>
-                <br /><hr width="100%" /><br />
-            </div>
-        
+
+                    <table class="table table-striped table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Cz</th>
+                                <th>En</th>
+                                <th>Type</th>
+                                <th>Comments</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php while($word = mysql_fetch_array($searchResult)) { ?>
+                                <tr class="search-results">           
+                                    <td><?php echo $word['cz']; ?></td>
+                                    <td><?php echo $word['en']; ?></td>
+                                    <td><?php echo $vocabularyType[$word['type']]; ?></td>
+                                    <td><?php echo $word['comments']; ?></td>
+                                    <td align="right"><a href="updateVocabulary.php?vocabularyId=<?php echo $word["id"]; ?>" class="btn btn-default btn-sm">Update</a></td>
+                                </tr>
+                            <?php } ?>
+                        </tbody>
+
+                    </table>
+                    <br /><hr width="100%" /><br />
+                </div>
+            <?php endif; ?>

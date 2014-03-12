@@ -2,31 +2,29 @@
 
 include("header.php");
 
-$vocabulary = parse_ini_file("vocabulary.ini", true);
+//$vocabulary = parse_ini_file("vocabulary.ini", true);
 
-$selectedLesson = false;
-$interval = 60;
-$itemsPerInterval = 6;
+$userSettings = getCurrentUserSettings();
+$userFirstNames = getClassUserFirstNames();
 
-//if(isset($_GET["groupId"])) $selectedLesson = $_GET["groupId"];
+$interval = $userSettings->practiceInterval;
+$itemsPerInterval = $userSettings->practiceItemsCount;
+
 if(isset($_GET["interval"])) $interval = $_GET["interval"];
 if(isset($_GET["items_per_interval"])) $itemsPerInterval = $_GET["items_per_interval"];
 
-$groups = dbQuery("SELECT * FROM groups ORDER BY created_at DESC");
+$groups = dbQuery("SELECT * FROM `group` ORDER BY created_at DESC");
 
 $vocabulary = null;
 $currentGroup = null;
 
-if(isset($_GET["groupId"]))
+if(!isset($_GET["groupId"]) || $_GET["groupId"] == "newest")
 {
-    if($_GET["groupId"] == "newest")
-    {
-        $vocabulary = dbQuery("SELECT * FROM vocabulary ORDER BY created_at DESC LIMIT ".($itemsPerInterval*5)."");
-    }
-    else
-    {
-        $vocabulary = dbQuery("SELECT * FROM vocabulary WHERE group_id = '".$_GET["groupId"]."' ORDER BY cz ASC");
-    }
+    $vocabulary = dbQuery("SELECT * FROM vocabulary ORDER BY created_at DESC LIMIT ".($itemsPerInterval*5)."");
+}
+else
+{
+    $vocabulary = dbQuery("SELECT * FROM vocabulary WHERE group_id = '".$_GET["groupId"]."' ORDER BY cz ASC");
 }
 
 ?>
@@ -54,7 +52,7 @@ if(isset($_GET["groupId"]))
 <p>Select a group that you would like to practice.</p>
 <p>
     Or you can practice the 
-    <a class="btn btn-default" href="index.php?groupId=newest&interval=<?php echo $interval ?>&items_per_interval=<?php echo $itemsPerInterval ?>">
+    <a class="btn btn-default" href="index.php?groupId=newest">
         Latest added vocabulary
     </a>
 </p>
@@ -75,7 +73,7 @@ if(isset($_GET["groupId"]))
             <?php endif; ?>
             <tr>
                 <td>
-                    <a href="index.php?groupId=<?php echo urlencode($group["id"]); ?>&interval=<?php echo $interval ?>&items_per_interval=<?php echo $itemsPerInterval ?>"><?php echo $group["name"]; ?></a><br />
+                    <a href="index.php?groupId=<?php echo urlencode($group["id"]); ?>"><?php echo $group["name"]; ?></a><br />
                 </td>            
                 <td><?php echo $group['comments']; ?></td>
                 <td><?php echo date("d-M-Y", strtotime($group['created_at'])); ?></td>
@@ -109,7 +107,12 @@ if(isset($_GET["groupId"]))
             <th>Cz</th>
             <th>En</th>
             <th>Type</th>
+            <th>Correct?</th>
             <th>Comments</th>
+            <th>Added By</th>
+            <th>Updated By</th>
+            <th>Created / Updated At</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -120,7 +123,12 @@ if(isset($_GET["groupId"]))
                 <td><?php echo $word['cz']; ?></td>
                 <td><?php echo $word['en']; ?></td>
                 <td><?php echo $vocabularyType[$word['type']]; ?></td>
+                <td><?php echo $vocabularyVerification[$word['verification']]; ?></td>
                 <td><?php echo $word['comments']; ?></td>
+                <td><?php echo $userFirstNames[$word["added_by"]]; ?></td>
+            <td><?php echo $userFirstNames[$word["updated_by"]]; ?></td>
+            <td><?php echo $word["created_at"]; ?> / <?php echo $word["updated_at"]; ?></td>
+                <td align="right"><a href="updateVocabulary.php?vocabularyId=<?php echo $word["id"]; ?>" class="btn btn-default btn-sm">Update</a></td>
             </tr>
             <?php $wordCount++; ?>
         <?php } ?>

@@ -4,15 +4,30 @@
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST')
 {
+    $currentUser = getCurrentUser();
+    
     $vocabularyGroupId = mysql_escape_string($_POST["vocabularyGroupId"]);
     $vocabularyCz = mysql_escape_string($_POST["vocabularyCz"]);
     $vocabularyEn = mysql_escape_string($_POST["vocabularyEn"]);
     $vocabularyTyp = mysql_escape_string($_POST["vocabularyType"]);
+    $vocabularyVerificatio = mysql_escape_string($_POST["vocabularyVerification"]);
     $vocabularyComments = mysql_escape_string($_POST["vocabularyComments"]);
     
-    dbExecute("INSERT INTO vocabulary (group_id, en, cz, type, comments) 
-            VALUES ('$vocabularyGroupId', '$vocabularyEn', '$vocabularyCz', '$vocabularyTyp', '$vocabularyComments')");
+    dbExecute("INSERT INTO vocabulary (group_id, en, cz, type, verification, comments, added_by, updated_by, updated_at) 
+            VALUES (
+                '$vocabularyGroupId', 
+                '$vocabularyEn', 
+                '$vocabularyCz', 
+                '$vocabularyTyp', 
+                '$vocabularyVerificatio',
+                '$vocabularyComments',
+                '".$currentUser["id"]."',
+                '".$currentUser["id"]."',
+                '".date("Y-m-d H:i:s")."'
+            )");
 }
+
+$userFirstNames = getClassUserFirstNames();
 
 $vocabulary = dbQuery("SELECT * FROM vocabulary WHERE group_id = '".$_GET["groupId"]."' ORDER BY created_at DESC");
 
@@ -53,6 +68,16 @@ $vocabulary = dbQuery("SELECT * FROM vocabulary WHERE group_id = '".$_GET["group
                 </td>
             </tr>
             <tr>
+                <td>Verification</td>
+                <td>
+                    <select name="vocabularyVerification" style="width:100%;">
+                        <?php foreach($vocabularyVerification as $key => $value): ?>
+                        <option value="<?php echo $key; ?>" /><?php echo $value; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </td>
+            </tr>
+            <tr>
                 <td>Comments</td>
                 <td><textarea name="vocabularyComments" style="width: 100%;height: 100px;"></textarea></td>
             </tr>
@@ -74,7 +99,11 @@ $vocabulary = dbQuery("SELECT * FROM vocabulary WHERE group_id = '".$_GET["group
             <th>Cz</th>
             <th>En</th>
             <th>Type</th>
+            <th>Correct?</th>
             <th>Comments</th>
+            <th>Added By</th>
+            <th>Updated By</th>
+            <th>Created / Updated At</th>
             <th></th>
         </tr>
     </thead>
@@ -84,7 +113,11 @@ $vocabulary = dbQuery("SELECT * FROM vocabulary WHERE group_id = '".$_GET["group
             <td><?php echo $word['cz']; ?></td>
             <td><?php echo $word['en']; ?></td>
             <td><?php echo $vocabularyType[$word['type']]; ?></td>
+            <td><?php echo $vocabularyVerification[$word['verification']]; ?></td>
             <td><?php echo $word['comments']; ?></td>
+            <td><?php echo $userFirstNames[$word["added_by"]]; ?></td>
+            <td><?php echo $userFirstNames[$word["updated_by"]]; ?></td>
+            <td><?php echo $word["created_at"]; ?> / <?php echo $word["updated_at"]; ?></td>
             <td align="right"><a href="updateVocabulary.php?vocabularyId=<?php echo $word["id"]; ?>" class="btn btn-default btn-sm">Update</a></td>
         </tr>
         <?php } ?>

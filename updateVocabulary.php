@@ -4,14 +4,23 @@
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST')
 {
+    $currentUser = getCurrentUser();
+    
     $vocabularyGroupId = mysql_escape_string($_POST["vocabularyGroupId"]);
     $vocabularyCz = mysql_escape_string($_POST["vocabularyCz"]);
     $vocabularyEn = mysql_escape_string($_POST["vocabularyEn"]);
-    $vocabularyType = mysql_escape_string($_POST["vocabularyType"]);
+    $vocabularyTyp = mysql_escape_string($_POST["vocabularyType"]);
+    $vocabularyVerificatio = mysql_escape_string($_POST["vocabularyVerification"]);
     $vocabularyComments = mysql_escape_string($_POST["vocabularyComments"]);
     
-    dbExecute("UPDATE vocabulary 
-            SET cz='$vocabularyCz', en='$vocabularyEn', type='$vocabularyType', comments='$vocabularyComments'
+    dbExecute("UPDATE vocabulary SET 
+                cz='$vocabularyCz', 
+                en='$vocabularyEn', 
+                type='$vocabularyTyp', 
+                verification='$vocabularyVerificatio',
+                comments='$vocabularyComments',
+                updated_by='".$currentUser["id"]."',
+                updated_at='".date("Y-m-d H:i:s")."'
             WHERE id='".$_GET["vocabularyId"]."'
             ");
 }
@@ -44,16 +53,25 @@ $word = mysql_fetch_array($vocabulary);
                 <td>Type</td>
                 <td>
                     <select name="vocabularyType" id="vocabularyType" style="width:100%;">
-                        <option value="verb_ovat" />Verb -OVAT</option>
-                        <option value="verb_at" />Verb -AT</option>
-                        <option value="verb_et_et_it" />Verb -ET/-ĚT/-IT</option>
-                        <option value="verb_irregular" />Verb Irregular</option>
-                        <option value="verb_noun" />Noun</option>
-                        <option value="verb_adjective" />Adjective</option>
-                        <option value="unknown" />No idea!</option>
+                        <?php foreach($vocabularyType as $vocabKey => $vocabName): ?>
+                        <option value="<?php echo $vocabKey; ?>" /><?php echo $vocabName; ?></option>
+                        <?php endforeach; ?>
                     </select>
                     <script type="text/javascript">
                         $("#vocabularyType").val("<?php echo $word["type"]; ?>");
+                    </script>
+                </td>
+            </tr>
+            <tr>
+                <td>Verification</td>
+                <td>
+                    <select name="vocabularyVerification" id="vocabularyVerification" style="width:100%;">
+                        <?php foreach($vocabularyVerification as $key => $value): ?>
+                        <option value="<?php echo $key; ?>" /><?php echo $value; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                    <script type="text/javascript">
+                        $("#vocabularyVerification").val("<?php echo $word["verification"]; ?>");
                     </script>
                 </td>
             </tr>
