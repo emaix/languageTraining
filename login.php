@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     $user = dbQuery("SELECT * FROM `user` WHERE email = '".$email."'");
     $user = mysql_fetch_array($user);
     
-    if($user["password"] == md5($password) || $user["password"] == "")
+    if($user && ($user["password"] == md5($password) || $user["password"] == ""))
     {
         setIsAuthenticated(true);
         
@@ -56,6 +56,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 </center>
 
 <br /><br /><br /><br /><br />
+
+<center>
+    <b>Temp info for users:</b><br />
+    sofia<br />
+    netti<br />
+    alicia<br />
+    babora<br /><br />
+
+<i>Use above as email, then click your name at the top and change your info + password.</i>
+</center>
+
 <br /><br /><br /><br /><br />
 <br /><br /><br /><br /><br />
 
